@@ -16,4 +16,7 @@ public class ExceptionMessage {
 
     public static final String SAVE_PERSIST = "Data save failed error";
 
+    public static final String BAD_REQUEST = "Bad request";
+
+    public static final String INTERNAL_SERVER_ERROR = "Internal server error";
 }
