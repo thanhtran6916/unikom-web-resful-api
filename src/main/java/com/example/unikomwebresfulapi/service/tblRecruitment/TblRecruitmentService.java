@@ -1,5 +1,6 @@
 package com.example.unikomwebresfulapi.service.tblRecruitment;
 
+import com.example.unikomwebresfulapi.exception.ExceptionMessage;
 import com.example.unikomwebresfulapi.exception.NotFoundException;
 import com.example.unikomwebresfulapi.exception.NotSaveException;
 import com.example.unikomwebresfulapi.model.TblRecruitment;
@@ -21,7 +22,7 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     public Page<TblRecruitment> findTblRecruitmentsExist(Pageable pageable) {
         Page<TblRecruitment> tblRecruitments = tblRecruitmentRepository.findTblRecruitmentsExist(pageable);
         if (tblRecruitments == null) {
-            throw new NotFoundException("Not found entity");
+            throw new NotFoundException(ExceptionMessage.NOT_FOUND_ENTITY);
         }
         return tblRecruitments;
     }
@@ -30,7 +31,7 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     public Iterable<TblRecruitment> findAll() {
         Iterable<TblRecruitment> tblRecruitments = tblRecruitmentRepository.findAll();
         if (tblRecruitments == null) {
-            throw new NotFoundException("Not found entity");
+            throw new NotFoundException(ExceptionMessage.NOT_FOUND_ENTITY);
         }
         return tblRecruitments;
     }
@@ -39,7 +40,7 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     public Optional<TblRecruitment> findById(Long id) {
         Optional<TblRecruitment> tblRecruitmentOptional = tblRecruitmentRepository.findById(id);
         if (!tblRecruitmentOptional.isPresent()) {
-            throw new NotFoundException(NotFoundException.ID_NOT_FOUND);
+            throw new NotFoundException(ExceptionMessage.ID_NOT_FOUND);
         }
         return tblRecruitmentRepository.findById(id);
     }
@@ -48,7 +49,7 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     public TblRecruitment save(TblRecruitment tblRecruitment) {
         TblRecruitment tblRecruitmentResponse = tblRecruitmentRepository.save(tblRecruitment);
         if (tblRecruitmentResponse == null) {
-            throw new NotSaveException(NotSaveException.SAVE_PERSIST);
+            throw new NotSaveException(ExceptionMessage.SAVE_PERSIST);
         }
         return tblRecruitmentRepository.save(tblRecruitment);
     }
@@ -57,7 +58,7 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     public boolean delete(Long id) {
         Optional<TblRecruitment> tblRecruitmentOptional = tblRecruitmentRepository.findById(id);
         if (!tblRecruitmentOptional.isPresent()) {
-            throw new NotFoundException(NotFoundException.ID_NOT_FOUND);
+            throw new NotFoundException(ExceptionMessage.ID_NOT_FOUND);
         }
         TblRecruitment tblRecruitment = tblRecruitmentOptional.get();
         tblRecruitment.setDeleted(true);

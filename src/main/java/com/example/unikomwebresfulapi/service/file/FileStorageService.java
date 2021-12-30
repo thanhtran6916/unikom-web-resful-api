@@ -1,5 +1,6 @@
 package com.example.unikomwebresfulapi.service.file;
 
+import com.example.unikomwebresfulapi.exception.ExceptionMessage;
 import com.example.unikomwebresfulapi.exception.FileStorageException;
 import com.example.unikomwebresfulapi.exception.MyFileNotFoundException;
 import com.example.unikomwebresfulapi.property.FileStorageProperties;
@@ -29,7 +30,7 @@ public class FileStorageService {
         try {
             Files.createDirectories(this.fileStorageLocation);
         } catch (Exception e) {
-            throw new FileStorageException("Không thể tạo thư mục lưu trữ các tệp đã tải lên.", e);
+            throw new FileStorageException(ExceptionMessage.NOT_CREATE_FOLDER_UPLOAD, e);
         }
     }
 
@@ -38,13 +39,13 @@ public class FileStorageService {
 
         try {
             if (fileName.contains("..")) {
-                throw new FileStorageException("Xin lỗi! Tên tệp chứa chuỗi đường dẫn không hợp lệ" + fileName);
+                throw new FileStorageException(ExceptionMessage.FILENAME_IS_INVALID+ " " + fileName);
             }
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             return fileName;
         } catch (IOException e) {
-            throw new FileStorageException("Không thể lưu trữ tệp" + fileName + ". Xin vui lòng thử lại!", e);
+            throw new FileStorageException(ExceptionMessage.FILE_NOT_ARCHIVED + " " + fileName, e);
         }
     }
 
@@ -55,10 +56,10 @@ public class FileStorageService {
             if (resource.exists()) {
                 return resource;
             } else {
-                throw new MyFileNotFoundException("Tệp không tồn tại " + fileName);
+                throw new MyFileNotFoundException(ExceptionMessage.FILE_NOT_EXIST + " " + fileName);
             }
         } catch (MalformedURLException e) {
-            throw new MyFileNotFoundException("Tệp không tồn tại " + fileName, e);
+            throw new MyFileNotFoundException(ExceptionMessage.FILE_NOT_EXIST + " " + fileName, e);
         }
     }
 }

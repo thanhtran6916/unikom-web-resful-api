@@ -1,6 +1,7 @@
 package com.example.unikomwebresfulapi.exception;
 
 public class FileStorageException extends RuntimeException {
+
     public FileStorageException(String message) {
         super(message);
     }
