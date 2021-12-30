@@ -35,6 +35,9 @@ dependencies {
 
     //JWT
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+    //AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 }
 
 test {
