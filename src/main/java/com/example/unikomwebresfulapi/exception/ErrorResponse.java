@@ -1,5 +1,6 @@
 package com.example.unikomwebresfulapi.exception;
 
+import com.example.unikomwebresfulapi.helper.MessageUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class ErrorResponse {
     private int status = 1;
 
     public ErrorResponse(ApplicationException e){
-        this.errorCode =e.getErrorCode();
-//        this.message = MessageUtils.getMessage(this.errorCode);
+        this.errorCode = e.getErrorCode();
+        this.message = MessageUtils.getMessage(this.errorCode);
     }
 }

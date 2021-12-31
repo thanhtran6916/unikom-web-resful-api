@@ -3,8 +3,6 @@ package com.example.unikomwebresfulapi.service.tblRecruitment;
 import com.example.unikomwebresfulapi.dto.request.TblRecruitmentRequest;
 import com.example.unikomwebresfulapi.dto.response.TblRecruitmentResponse;
 import com.example.unikomwebresfulapi.exception.ApplicationException;
-import com.example.unikomwebresfulapi.exception.ExceptionMessage;
-import com.example.unikomwebresfulapi.exception.NotFoundException;
 import com.example.unikomwebresfulapi.model.TblRecruitment;
 import com.example.unikomwebresfulapi.repository.ITblRecruitmentRepository;
 import org.modelmapper.ModelMapper;
@@ -34,7 +32,7 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     public TblRecruitmentResponse findById(Long id) {
         Optional<TblRecruitment> tblRecruitmentOptional = tblRecruitmentRepository.findById(id);
         if (!tblRecruitmentOptional.isPresent()) {
-            throw new NotFoundException(ExceptionMessage.ID_NOT_FOUND);
+            throw new ApplicationException("err.not-found");
         }
         return modelMapper.map(tblRecruitmentOptional.get(), TblRecruitmentResponse.class);
     }
