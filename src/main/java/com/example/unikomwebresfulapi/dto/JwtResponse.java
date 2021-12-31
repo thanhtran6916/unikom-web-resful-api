@@ -1,4 +1,4 @@
-package com.example.unikomwebresfulapi.model.dto;
+package com.example.unikomwebresfulapi.dto;
 
 public class JwtResponse {
     private String token;

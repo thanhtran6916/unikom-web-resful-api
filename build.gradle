@@ -38,6 +38,10 @@ dependencies {
 
     //AOP
     implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    //ModelMapper
+    implementation 'org.modelmapper:modelmapper:2.3.0'
+
 }
 
 test {

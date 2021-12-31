@@ -11,7 +11,14 @@ import lombok.Setter;
 @Setter
 public class ErrorResponse {
 
-    private int errorCode;
+    private String errorCode;
 
     private String message;
+
+    private int status = 1;
+
+    public ErrorResponse(ApplicationException e){
+        this.errorCode =e.getErrorCode();
+//        this.message = MessageUtils.getMessage(this.errorCode);
+    }
 }

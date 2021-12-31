@@ -1,6 +1,6 @@
 package com.example.unikomwebresfulapi.controller;
 
-import com.example.unikomwebresfulapi.model.dto.UploadFileResponse;
+import com.example.unikomwebresfulapi.dto.UploadFileResponse;
 import com.example.unikomwebresfulapi.service.file.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +52,6 @@ public class FileController {
     @GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = fileStorageService.loadFileAsResource(fileName);
-
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
