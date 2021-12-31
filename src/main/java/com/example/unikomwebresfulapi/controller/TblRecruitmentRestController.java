@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -33,7 +34,7 @@ public class TblRecruitmentRestController {
     }
 
     @GetMapping("{id}")
-    public ResultResp findById(@PathVariable Long id) {
+    public ResultResp findById(@PathVariable Long id, HttpRequest httpRequest) {
         return new ResultResp(tblRecruitmentService.findById(id));
     }
 

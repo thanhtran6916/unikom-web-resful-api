@@ -2,6 +2,7 @@ package com.example.unikomwebresfulapi.helper;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
@@ -17,6 +18,6 @@ public class MessageUtils implements MessageSourceAware {
     }
 
     public static String getMessage(String key, String... params) {
-        return messageSource.getMessage(key, params, new Locale("vi"));
+        return messageSource.getMessage(key, params, LocaleContextHolder.getLocale());
     }
 }

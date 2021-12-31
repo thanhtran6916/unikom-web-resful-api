@@ -1,6 +1,8 @@
 package com.example.unikomwebresfulapi.dto.response;
 
+import com.example.unikomwebresfulapi.model.TblRecruitment;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 
@@ -27,4 +29,7 @@ public class TblRecruitmentResponse {
 
     private String salary;
 
+    public TblRecruitmentResponse(TblRecruitment source) {
+        BeanUtils.copyProperties(source,this);
+    }
 }

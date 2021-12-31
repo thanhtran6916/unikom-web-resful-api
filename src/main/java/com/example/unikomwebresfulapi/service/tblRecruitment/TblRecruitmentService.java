@@ -46,7 +46,7 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     @Override
     public TblRecruitmentResponse edit(Long id, TblRecruitmentRequest tblRecruitmentRequest) {
         Optional<TblRecruitment> oldTblRecruitment = tblRecruitmentRepository.findById(id);
-        oldTblRecruitment.orElseThrow(() -> new ApplicationException());
+        oldTblRecruitment.orElseThrow(() -> new ApplicationException("err.not-found"));
         tblRecruitmentRequest.setId(id);
         TblRecruitment tblRecruitment = modelMapper.map(tblRecruitmentRequest, TblRecruitment.class);
         return modelMapper.map(tblRecruitmentRepository.save(tblRecruitment), TblRecruitmentResponse.class);
@@ -55,7 +55,7 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     @Override
     public void delete(Long id) {
         Optional<TblRecruitment> oldTblRecruitment = tblRecruitmentRepository.findById(id);
-        oldTblRecruitment.orElseThrow(() -> new ApplicationException());
+        oldTblRecruitment.orElseThrow(() -> new ApplicationException("err.not-found"));
         tblRecruitmentRepository.deleteById(id);
     }
 
@@ -63,14 +63,9 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     public Page<TblRecruitmentResponse> findTblRecruitmentsExist(String name, String salary, Pageable pageable) {
         Page<TblRecruitment> tblRecruitments = tblRecruitmentRepository.findTblRecruitmentsExist(name, salary, pageable);
         if (tblRecruitments == null) {
-//            throw new Exception();
+            throw new ApplicationException("err.not-found");
         }
-        Page<TblRecruitmentResponse> tblRecruitmentResponses = tblRecruitments.map(new Function<TblRecruitment, TblRecruitmentResponse>() {
-            @Override
-            public TblRecruitmentResponse apply(TblRecruitment tblRecruitment) {
-                return modelMapper.map(tblRecruitment, TblRecruitmentResponse.class);
-            }
-        });
+        Page<TblRecruitmentResponse> tblRecruitmentResponses = tblRecruitments.map(TblRecruitmentResponse::new);
 
         return tblRecruitmentResponses;
     }
