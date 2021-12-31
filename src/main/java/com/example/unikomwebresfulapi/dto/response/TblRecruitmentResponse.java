@@ -1,4 +1,4 @@
-package com.example.unikomwebresfulapi.dto;
+package com.example.unikomwebresfulapi.dto.response;
 
 import lombok.Data;
 
@@ -26,7 +26,5 @@ public class TblRecruitmentResponse {
     private LocalDate expireDate;
 
     private String salary;
-
-
 
 }

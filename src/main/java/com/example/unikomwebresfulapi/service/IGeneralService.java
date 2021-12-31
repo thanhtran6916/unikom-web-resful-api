@@ -1,14 +1,16 @@
 package com.example.unikomwebresfulapi.service;
 
-import java.util.Optional;
+import org.springframework.data.domain.Page;
 
-public interface IGeneralService<T> {
+public interface IGeneralService<T, K> {
 
-    Iterable<T> findAll();
+    Page<K> findAll();
 
-    Optional<T> findById(Long id);
+    K findById(Long id);
 
-    T save(T t);
+    K save(T t);
 
-    boolean delete(Long id);
+    K edit(Long id, T t);
+
+    void delete(Long id);
 }

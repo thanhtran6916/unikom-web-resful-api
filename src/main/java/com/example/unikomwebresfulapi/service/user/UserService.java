@@ -1,9 +1,12 @@
 package com.example.unikomwebresfulapi.service.user;
 
+import com.example.unikomwebresfulapi.dto.request.UserRequest;
+import com.example.unikomwebresfulapi.dto.response.UserResponse;
 import com.example.unikomwebresfulapi.model.User;
 import com.example.unikomwebresfulapi.model.UserPrincipal;
 import com.example.unikomwebresfulapi.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -18,30 +21,28 @@ public class UserService implements IUserService {
     public IUserRepository userRepository;
 
     @Override
-    public Iterable<User> findAll() {
-        return userRepository.findAll();
+    public Page<UserResponse> findAll() {
+        return null;
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public UserResponse findById(Long id) {
+        return null;
     }
 
     @Override
-    public User save(User user) {
-        return userRepository.save(user);
+    public UserResponse save(UserRequest userRequest) {
+        return null;
     }
 
     @Override
-    public boolean delete(Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (!userOptional.isPresent()) {
-            return false;
-        }
-        User user = userOptional.get();
-        user.setDeleteAt(LocalTime.now());
-        userRepository.save(user);
-        return false;
+    public UserResponse edit(Long id, UserRequest userRequest) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
+
     }
 
     @Override

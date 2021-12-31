@@ -1,4 +1,4 @@
-package com.example.unikomwebresfulapi.dto;
+package com.example.unikomwebresfulapi.dto.response;
 
 import lombok.Data;
 

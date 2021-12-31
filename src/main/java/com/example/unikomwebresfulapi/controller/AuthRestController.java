@@ -1,7 +1,7 @@
 package com.example.unikomwebresfulapi.controller;
 
 import com.example.unikomwebresfulapi.model.User;
-import com.example.unikomwebresfulapi.dto.JwtResponse;
+import com.example.unikomwebresfulapi.dto.response.JwtResponse;
 import com.example.unikomwebresfulapi.service.jwt.JwtService;
 import com.example.unikomwebresfulapi.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

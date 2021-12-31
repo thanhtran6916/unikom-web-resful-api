@@ -1,16 +1,13 @@
 package com.example.unikomwebresfulapi.controller;
 
-import com.example.unikomwebresfulapi.dto.TblRecruitmentResponse;
+import com.example.unikomwebresfulapi.dto.request.TblRecruitmentRequest;
+import com.example.unikomwebresfulapi.dto.response.TblRecruitmentResponse;
 import com.example.unikomwebresfulapi.helper.ResultResp;
-import com.example.unikomwebresfulapi.model.TblRecruitment;
 import com.example.unikomwebresfulapi.service.tblRecruitment.ITblRecruitmentService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -23,59 +20,37 @@ public class TblRecruitmentRestController {
     @Autowired
     private ITblRecruitmentService tblRecruitmentService;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     @GetMapping
-    public ResponseEntity<Page<TblRecruitment>> findAll(
+    public Page<TblRecruitmentResponse> findAll(
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "0") int page) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam Optional<String> q,
+            @RequestParam Optional<String> s) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<TblRecruitment> tblRecruitments = tblRecruitmentService.findTblRecruitmentsExist(pageable);
-        return new ResponseEntity<>(tblRecruitments, HttpStatus.OK);
+        String name = q.orElse("");
+        String salary = s.orElse("");
+        return tblRecruitmentService.findTblRecruitmentsExist(name, salary, pageable);
     }
 
     @GetMapping("{id}")
-    public ResultResp<TblRecruitmentResponse> findById(@PathVariable Long id) {
-        Optional<TblRecruitment> tblRecruitmentOptional = tblRecruitmentService.findById(id);
-        if (!tblRecruitmentOptional.isPresent()) {
-            return new ResultResp<>(HttpStatus.NOT_FOUND);
-        }
-        TblRecruitmentResponse tblRecruitmentResponse = modelMapper.map(tblRecruitmentOptional.get(), TblRecruitmentResponse.class);
-        ResultResp<?> resultResp = ResultResp.success(tblRecruitmentResponse);
-        return new ResultResp<>(resultResp, HttpStatus.OK);
+    public ResultResp findById(@PathVariable Long id) {
+        return new ResultResp(tblRecruitmentService.findById(id));
     }
 
     @PostMapping
-    public ResultResp<TblRecruitmentResponse> save(@RequestBody TblRecruitment tblRecruitment) {
-        TblRecruitment tblRecruitmentResult = tblRecruitmentService.save(tblRecruitment);
-        TblRecruitmentResponse tblRecruitmentResponse = modelMapper.map(tblRecruitmentResult, TblRecruitmentResponse.class);
-        ResultResp<?> resultResp = ResultResp.success(tblRecruitmentResponse);
-        return new ResultResp<>(resultResp, HttpStatus.CREATED);
+    public ResultResp save(@RequestBody TblRecruitmentRequest tblRecruitmentRequest) {
+        return new ResultResp(tblRecruitmentService.save(tblRecruitmentRequest));
     }
 
     @PutMapping("{id}")
-    public ResultResp<TblRecruitment> edit(@PathVariable Long id, @RequestBody TblRecruitment tblRecruitment) {
-        Optional<TblRecruitment> tblRecruitmentOptional = tblRecruitmentService.findById(id);
-        if (!tblRecruitmentOptional.isPresent()) {
-            return new ResultResp<>(HttpStatus.BAD_REQUEST);
-        }
-        TblRecruitment oldTblRecruitment = tblRecruitmentOptional.get();
-        tblRecruitment.setId(oldTblRecruitment.getId());
-        TblRecruitment tblRecruitmentResult = tblRecruitmentService.save(tblRecruitment);
-        TblRecruitmentResponse tblRecruitmentResponse = modelMapper.map(tblRecruitmentResult, TblRecruitmentResponse.class);
-        ResultResp<?> resultResp = ResultResp.success(tblRecruitmentResponse);
-        return new ResultResp<>(resultResp, HttpStatus.OK);
+    public ResultResp edit(@PathVariable Long id, @RequestBody TblRecruitmentRequest tblRecruitmentRequest) {
+        TblRecruitmentResponse tblRecruitmentResponse = tblRecruitmentService.edit(id, tblRecruitmentRequest);
+        return new ResultResp(tblRecruitmentResponse);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<TblRecruitment> delete(@PathVariable Long id) {
-        boolean isDelete = tblRecruitmentService.delete(id);
-        if (isDelete) {
-            ResultResp<?> resultResp = ResultResp.delete();
-            return new ResultResp<>(resultResp, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResultResp delete(@PathVariable Long id) {
+        return new ResultResp();
     }
 
 }
