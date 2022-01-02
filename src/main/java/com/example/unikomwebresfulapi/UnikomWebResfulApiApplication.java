@@ -27,9 +27,6 @@ public class UnikomWebResfulApiApplication {
         return bean;
     }
 
-    @Autowired
-    private MessageUtils messageUtils;
-
     public static void main(String[] args) {
         SpringApplication.run(UnikomWebResfulApiApplication.class, args);
     }
