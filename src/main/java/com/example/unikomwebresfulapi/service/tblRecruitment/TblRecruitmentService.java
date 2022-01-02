@@ -5,23 +5,18 @@ import com.example.unikomwebresfulapi.dto.response.TblRecruitmentResponse;
 import com.example.unikomwebresfulapi.exception.ApplicationException;
 import com.example.unikomwebresfulapi.model.TblRecruitment;
 import com.example.unikomwebresfulapi.repository.ITblRecruitmentRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 @Service
 public class TblRecruitmentService implements ITblRecruitmentService {
 
     @Autowired
     private ITblRecruitmentRepository tblRecruitmentRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Override
     public Page<TblRecruitmentResponse> findAll() {
@@ -34,13 +29,13 @@ public class TblRecruitmentService implements ITblRecruitmentService {
         if (!tblRecruitmentOptional.isPresent()) {
             throw new ApplicationException("err.not-found");
         }
-        return modelMapper.map(tblRecruitmentOptional.get(), TblRecruitmentResponse.class);
+        return new TblRecruitmentResponse(tblRecruitmentOptional.get());
     }
 
     @Override
     public TblRecruitmentResponse save(TblRecruitmentRequest tblRecruitmentRequest) {
-        TblRecruitment tblRecruitment = modelMapper.map(tblRecruitmentRequest, TblRecruitment.class);
-        return modelMapper.map(tblRecruitmentRepository.save(tblRecruitment), TblRecruitmentResponse.class);
+        TblRecruitment tblRecruitment = new TblRecruitment(tblRecruitmentRequest);
+        return new TblRecruitmentResponse(tblRecruitmentRepository.save(tblRecruitment));
     }
 
     @Override
@@ -48,8 +43,8 @@ public class TblRecruitmentService implements ITblRecruitmentService {
         Optional<TblRecruitment> oldTblRecruitment = tblRecruitmentRepository.findById(id);
         oldTblRecruitment.orElseThrow(() -> new ApplicationException("err.not-found"));
         tblRecruitmentRequest.setId(id);
-        TblRecruitment tblRecruitment = modelMapper.map(tblRecruitmentRequest, TblRecruitment.class);
-        return modelMapper.map(tblRecruitmentRepository.save(tblRecruitment), TblRecruitmentResponse.class);
+        TblRecruitment tblRecruitment = new TblRecruitment(tblRecruitmentRequest);
+        return new TblRecruitmentResponse(tblRecruitmentRepository.save(tblRecruitment));
     }
 
     @Override
