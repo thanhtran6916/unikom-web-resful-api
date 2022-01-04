@@ -25,11 +25,14 @@ public class BlogService implements IBlogService{
 
     @Override
     public BlogResponse findById(Long id) {
-        Optional<Blog> blogOptional = blogRepository.findById(id);
-        if (!blogOptional.isPresent()) {
-            throw new ApplicationException("err.not-found");
-        }
-        return new BlogResponse(blogOptional.get());
+
+        return blogRepository.findById(id)
+                .map(BlogResponse::new).orElseThrow(() -> new ApplicationException("err.not-found"));
+//        Optional<Blog> blogOptional = blogRepository.findById(id);
+//        if (!blogOptional.isPresent()) {
+//            throw new ApplicationException("err.not-found");
+//        }
+//        return new BlogResponse(blogOptional.get());
     }
 
     @Override

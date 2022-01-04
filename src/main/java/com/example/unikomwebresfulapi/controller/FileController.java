@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("media")
 @CrossOrigin("*")
 public class FileController {
 
@@ -29,7 +30,7 @@ public class FileController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @PostMapping("/uploadFile")
+    @PostMapping("/upload")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file) ;
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -40,14 +41,8 @@ public class FileController {
         return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
-    @PostMapping("/uploadMultipleFiles")
-    public ResultResp uploadMultipleFiles(@RequestParam("files") List<MultipartFile> files) {
-        return new ResultResp(files.stream().map(file -> uploadFile(file)).collect(Collectors.toList()));
-
-    }
-
-    @GetMapping("/downloadFile/{fileName}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+    @GetMapping("/view")
+    public ResponseEntity<Resource> downloadFile(@RequestParam String fileName, HttpServletRequest request) {
         Resource resource = fileStorageService.loadFileAsResource(fileName);
 
         String contentType = null;
