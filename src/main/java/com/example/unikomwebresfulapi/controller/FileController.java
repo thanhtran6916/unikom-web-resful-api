@@ -1,7 +1,6 @@
 package com.example.unikomwebresfulapi.controller;
 
 import com.example.unikomwebresfulapi.dto.response.UploadFileResponse;
-import com.example.unikomwebresfulapi.helper.ResultResp;
 import com.example.unikomwebresfulapi.service.file.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +15,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("media")
@@ -32,10 +28,10 @@ public class FileController {
 
     @PostMapping("/upload")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        String fileName = fileStorageService.storeFile(file) ;
+        String fileName = fileStorageService.storeFile(file);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
-                .path(fileName)
+                .path("/media/view")
+                .path("?" + fileName)
                 .toUriString();
 
         return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());

@@ -55,7 +55,6 @@ public class TblRecruitmentService implements ITblRecruitmentService {
             throw new ApplicationException("err.not-found");
         }
         Page<TblRecruitmentResponse> tblRecruitmentResponses = tblRecruitments.map(TblRecruitmentResponse::new);
-
         return tblRecruitmentResponses;
     }
 
