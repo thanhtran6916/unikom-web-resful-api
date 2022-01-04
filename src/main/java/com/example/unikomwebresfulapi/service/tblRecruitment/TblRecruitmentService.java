@@ -50,8 +50,9 @@ public class TblRecruitmentService implements ITblRecruitmentService {
     @Override
     public void delete(Long id) {
         Optional<TblRecruitment> oldTblRecruitment = tblRecruitmentRepository.findById(id);
-        oldTblRecruitment.orElseThrow(() -> new ApplicationException("err.not-found"));
-        tblRecruitmentRepository.deleteById(id);
+        TblRecruitment tblRecruitment = oldTblRecruitment.orElseThrow(() -> new ApplicationException("err.not-found"));
+        tblRecruitment.setDeleted(true);
+        tblRecruitmentRepository.save(tblRecruitment);
     }
 
     @Override

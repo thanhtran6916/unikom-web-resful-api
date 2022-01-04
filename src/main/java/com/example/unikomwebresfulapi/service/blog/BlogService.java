@@ -49,10 +49,10 @@ public class BlogService implements IBlogService{
 
     @Override
     public void delete(Long id) {
-        Optional<Blog> blogOptional = blogRepository.findById(id);
-        blogOptional.orElseThrow(() -> new ApplicationException("err.not-found"));
-        blogRepository.deleteById(id);
-
+        Optional<Blog> oldBlogOptional = blogRepository.findById(id);
+        Blog blog = oldBlogOptional.orElseThrow(() -> new ApplicationException("err.not-found"));
+        blog.setDeleted(true);
+        blogRepository.save(blog);
     }
 
     @Override
