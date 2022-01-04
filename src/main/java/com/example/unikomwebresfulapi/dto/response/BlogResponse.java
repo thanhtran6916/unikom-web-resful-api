@@ -27,4 +27,8 @@ public class BlogResponse {
     public BlogResponse(Blog source) {
         BeanUtils.copyProperties(source,this);
     }
+
+    public BlogResponse doXyz(Blog b){
+        return null;
+    }
 }

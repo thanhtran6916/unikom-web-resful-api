@@ -36,8 +36,8 @@ public class FileStorageService {
 
     public String storeFile(MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        long time = new Date().getTime();
-        fileName = time + fileName;
+        long time = System.currentTimeMillis();
+        fileName = time+"_" + fileName;
         try {
             if (fileName.contains("..")) {
                 throw new FileStorageException("Xin lỗi! Tên tệp chứa chuỗi đường dẫn không hợp lệ" + fileName);

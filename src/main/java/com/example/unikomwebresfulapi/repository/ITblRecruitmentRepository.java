@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ITblRecruitmentRepository extends JpaRepository<TblRecruitment, Long> {
 
@@ -15,5 +17,7 @@ public interface ITblRecruitmentRepository extends JpaRepository<TblRecruitment,
     Page<TblRecruitment> findTblRecruitmentsExist(@Param("name") String name,
                                                   @Param("salary") String salary,
                                                   Pageable pageable);
+
+    Optional<TblRecruitment> findByIdAndDeletedFalse(Long id);
 
 }
