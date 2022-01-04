@@ -1,8 +1,10 @@
 package com.example.unikomwebresfulapi.model;
 
+import com.example.unikomwebresfulapi.dto.request.BlogRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,5 +34,9 @@ public class Blog extends Auditable<String> implements Serializable {
     private int view;
 
     private boolean isDeleted;
+
+    public Blog(BlogRequest blogRequest) {
+        BeanUtils.copyProperties(blogRequest, this);
+    }
 }
 
