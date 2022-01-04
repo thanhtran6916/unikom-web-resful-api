@@ -1,6 +1,7 @@
 package com.example.unikomwebresfulapi.controller;
 
 import com.example.unikomwebresfulapi.dto.response.UploadFileResponse;
+import com.example.unikomwebresfulapi.helper.ResultResp;
 import com.example.unikomwebresfulapi.service.file.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,11 +41,9 @@ public class FileController {
     }
 
     @PostMapping("/uploadMultipleFiles")
-    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile files) {
-        return Arrays.asList(files)
-                .stream()
-                .map(file -> uploadFile(file))
-                .collect(Collectors.toList());
+    public ResultResp uploadMultipleFiles(@RequestParam("files") List<MultipartFile> files) {
+        return new ResultResp(files.stream().map(file -> uploadFile(file)).collect(Collectors.toList()));
+
     }
 
     @GetMapping("/downloadFile/{fileName}")
