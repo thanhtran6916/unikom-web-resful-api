@@ -10,8 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class TblRecruitmentService implements ITblRecruitmentService {
 
@@ -25,11 +23,8 @@ public class TblRecruitmentService implements ITblRecruitmentService {
 
     @Override
     public TblRecruitmentResponse findById(Long id) {
-        Optional<TblRecruitment> tblRecruitmentOptional = tblRecruitmentRepository.findById(id);
-        if (!tblRecruitmentOptional.isPresent()) {
-            throw new ApplicationException("err.not-found");
-        }
-        return new TblRecruitmentResponse(tblRecruitmentOptional.get());
+        return tblRecruitmentRepository.findByIdAndDeletedFalse(id).map(TblRecruitmentResponse::new)
+                .orElseThrow(() -> new ApplicationException("err.not-found"));
     }
 
     @Override
@@ -40,17 +35,15 @@ public class TblRecruitmentService implements ITblRecruitmentService {
 
     @Override
     public TblRecruitmentResponse edit(Long id, TblRecruitmentRequest tblRecruitmentRequest) {
-        Optional<TblRecruitment> oldTblRecruitment = tblRecruitmentRepository.findById(id);
-        oldTblRecruitment.orElseThrow(() -> new ApplicationException("err.not-found"));
+        tblRecruitmentRepository.findByIdAndDeletedFalse(id).orElseThrow(() -> new ApplicationException("err.not-found"));
         tblRecruitmentRequest.setId(id);
-        TblRecruitment tblRecruitment = new TblRecruitment(tblRecruitmentRequest);
-        return new TblRecruitmentResponse(tblRecruitmentRepository.save(tblRecruitment));
+        return new TblRecruitmentResponse(tblRecruitmentRepository.save(new TblRecruitment(tblRecruitmentRequest)));
     }
 
     @Override
     public void delete(Long id) {
-        Optional<TblRecruitment> oldTblRecruitment = tblRecruitmentRepository.findById(id);
-        TblRecruitment tblRecruitment = oldTblRecruitment.orElseThrow(() -> new ApplicationException("err.not-found"));
+        TblRecruitment tblRecruitment = tblRecruitmentRepository.findByIdAndDeletedFalse(id)
+                .orElseThrow(() -> new ApplicationException("err.not-found"));
         tblRecruitment.setDeleted(true);
         tblRecruitmentRepository.save(tblRecruitment);
     }

@@ -49,7 +49,7 @@ public class TblRecruitment extends Auditable<String> implements Serializable {
     private String salary;
 
     @Column(name = "is_delete")
-    private boolean isDeleted;
+    private boolean deleted;
 
     public TblRecruitment(TblRecruitmentRequest tblRecruitmentRequest) {
         BeanUtils.copyProperties(tblRecruitmentRequest, this);

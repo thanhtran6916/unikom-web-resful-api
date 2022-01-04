@@ -8,12 +8,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ITblRecruitmentRepository extends JpaRepository<TblRecruitment, Long> {
 
-    @Query(value = "SELECT t FROM TblRecruitment t WHERE t.name like %:name% and t.salary like %:salary% and t.isDeleted = false ")
+    @Query(value = "SELECT t FROM TblRecruitment t WHERE t.name like %:name% and t.salary like %:salary% and t.deleted = false ")
     Page<TblRecruitment> findTblRecruitmentsExist(@Param("name") String name,
                                                   @Param("salary") String salary,
                                                   Pageable pageable);
+
+    Optional<TblRecruitment> findByIdAndDeletedFalse(Long id);
 
 }
