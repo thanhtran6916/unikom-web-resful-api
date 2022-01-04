@@ -1,8 +1,11 @@
 package com.example.unikomwebresfulapi.model;
 
+import com.example.unikomwebresfulapi.dto.request.TblRecruitmentRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -47,4 +50,8 @@ public class TblRecruitment extends Auditable<String> implements Serializable {
 
     @Column(name = "is_delete")
     private boolean isDeleted;
+
+    public TblRecruitment(TblRecruitmentRequest tblRecruitmentRequest) {
+        BeanUtils.copyProperties(tblRecruitmentRequest, this);
+    }
 }

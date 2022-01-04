@@ -22,7 +22,7 @@ public class TblRecruitmentRestController {
     private ITblRecruitmentService tblRecruitmentService;
 
     @GetMapping
-    public Page<TblRecruitmentResponse> findAll(
+    public ResultResp findAll(
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam Optional<String> q,
@@ -30,7 +30,7 @@ public class TblRecruitmentRestController {
         Pageable pageable = PageRequest.of(page, size);
         String name = q.orElse("");
         String salary = s.orElse("");
-        return tblRecruitmentService.findTblRecruitmentsExist(name, salary, pageable);
+        return new ResultResp(tblRecruitmentService.findTblRecruitmentsExist(name, salary, pageable));
     }
 
     @GetMapping("{id}")
@@ -51,6 +51,7 @@ public class TblRecruitmentRestController {
 
     @DeleteMapping("{id}")
     public ResultResp delete(@PathVariable Long id) {
+        tblRecruitmentService.delete(id);
         return new ResultResp();
     }
 

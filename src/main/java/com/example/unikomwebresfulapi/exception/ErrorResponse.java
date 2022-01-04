@@ -16,7 +16,7 @@ public class ErrorResponse {
 
     private String message;
 
-    private int status = 1;
+    private int status = 0;
 
     public ErrorResponse(ApplicationException e){
         this.errorCode = e.getErrorCode();

@@ -39,9 +39,6 @@ dependencies {
     //AOP
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
-    //ModelMapper
-    implementation 'org.modelmapper:modelmapper:2.3.0'
-
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.7.RELEASE'
 
