@@ -34,7 +34,7 @@ public class TblRecruitmentRestController {
     }
 
     @GetMapping("{id}")
-    public ResultResp findById(@PathVariable Long id, HttpRequest httpRequest) {
+    public ResultResp findById(@PathVariable Long id) {
         return new ResultResp(tblRecruitmentService.findById(id));
     }
 

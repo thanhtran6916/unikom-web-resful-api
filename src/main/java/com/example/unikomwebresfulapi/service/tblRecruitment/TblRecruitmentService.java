@@ -12,16 +12,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 @Service
 public class TblRecruitmentService implements ITblRecruitmentService {
 
     @Autowired
     private ITblRecruitmentRepository tblRecruitmentRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Override
     public Page<TblRecruitmentResponse> findAll() {
